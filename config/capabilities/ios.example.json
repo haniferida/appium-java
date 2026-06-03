@@ -1,0 +1,9 @@
+{
+  "platformName": "iOS",
+  "appium:automationName": "XCUITest",
+  "appium:deviceName": "iPhone 17",
+  "appium:platformVersion": "26.5",
+  "appium:app": "apps/my-demo-app-native/ios-simulator.zip",
+  "appium:bundleId": "com.saucelabs.mydemo.app.ios",
+  "appium:noReset": true
+}
