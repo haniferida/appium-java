@@ -2,7 +2,7 @@
 <suite name="Appium Suite" parallel="none" verbose="1">
     <test name="Smoke">
         <classes>
-            <class name="com.appium.tests.MyDemoAppLoginTest"/>
+            <class name="com.appium.tests.MyDemoAppNativeTest"/>
         </classes>
     </test>
 </suite>

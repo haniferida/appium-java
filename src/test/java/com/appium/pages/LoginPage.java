@@ -2,7 +2,6 @@ package com.appium.pages;
 
 import com.appium.locators.CrossPlatformLocator;
 import io.appium.java_client.AppiumBy;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -40,8 +39,6 @@ public class LoginPage extends BasePage {
             .ios(AppiumBy.iOSNsPredicateString("label == 'Login' AND type == 'XCUIElementTypeButton'"))
             .buildLocator();
 
-    private static final By PRODUCTS_TITLE = AppiumBy.accessibilityId("title");
-
     // --- Actions ---
 
     public LoginPage openFromCatalogMenu() {
@@ -71,9 +68,5 @@ public class LoginPage extends BasePage {
         return openFromCatalogMenu()
                 .enterCredentials(DEMO_USERNAME, DEMO_PASSWORD)
                 .submitLogin();
-    }
-
-    public boolean isProductsScreenDisplayed() {
-        return waitForText(PRODUCTS_TITLE, "Products");
     }
 }
