@@ -4,7 +4,6 @@ import com.appium.locators.CrossPlatformLocator;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
  * My Demo App (native) — login flow from the catalog menu.
@@ -46,9 +45,9 @@ public class LoginPage extends BasePage {
     // --- Actions ---
 
     public LoginPage openFromCatalogMenu() {
-        click(find(MENU_BUTTON));
-        click(find(LOGIN_MENU_ITEM));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(USERNAME_FIELD.get()));
+        click(MENU_BUTTON);
+        click(LOGIN_MENU_ITEM);
+        waitForVisible(USERNAME_FIELD);
         return this;
     }
 
@@ -64,7 +63,7 @@ public class LoginPage extends BasePage {
     }
 
     public LoginPage submitLogin() {
-        click(find(LOGIN_BUTTON));
+        click(LOGIN_BUTTON);
         return this;
     }
 
@@ -75,6 +74,6 @@ public class LoginPage extends BasePage {
     }
 
     public boolean isProductsScreenDisplayed() {
-        return wait.until(ExpectedConditions.textToBePresentInElementLocated(PRODUCTS_TITLE, "Products"));
+        return waitForText(PRODUCTS_TITLE, "Products");
     }
 }
