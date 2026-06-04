@@ -2,6 +2,7 @@ package com.appium.pages;
 
 import com.appium.locators.CrossPlatformLocator;
 import io.appium.java_client.AppiumBy;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -41,6 +42,7 @@ public class LoginPage extends BasePage {
 
     // --- Actions ---
 
+    @Step("Open login screen from catalog menu")
     public LoginPage openFromCatalogMenu() {
         click(MENU_BUTTON);
         click(LOGIN_MENU_ITEM);
@@ -48,6 +50,7 @@ public class LoginPage extends BasePage {
         return this;
     }
 
+    @Step("Enter credentials for user '{username}'")
     public LoginPage enterCredentials(String username, String password) {
         WebElement usernameField = find(USERNAME_FIELD);
         usernameField.clear();
@@ -59,11 +62,13 @@ public class LoginPage extends BasePage {
         return this;
     }
 
+    @Step("Submit login")
     public LoginPage submitLogin() {
         click(LOGIN_BUTTON);
         return this;
     }
 
+    @Step("Log in as demo user")
     public LoginPage loginAsDemoUser() {
         return openFromCatalogMenu()
                 .enterCredentials(DEMO_USERNAME, DEMO_PASSWORD)

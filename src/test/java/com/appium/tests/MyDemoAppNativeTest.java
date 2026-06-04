@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 
 import com.appium.base.BaseTest;
 import com.appium.pages.LoginPage;
+import com.appium.pages.ProductDetailPage;
 import com.appium.pages.ProductsPage;
 
 /**
@@ -21,5 +22,17 @@ public class MyDemoAppNativeTest extends BaseTest {
 
         productsPage.verifyDisplayed();
         log.info("Logged in successfully");
+    }
+
+    @Test(description = "Open first product and land on product detail screen")
+    public void openFirstProductShowsDetailPage() {
+        ProductsPage productsPage = new ProductsPage();
+        ProductDetailPage productDetailPage = new ProductDetailPage();
+
+        productsPage.verifyDisplayed();
+        productsPage.openFirstProduct();
+
+        productDetailPage.verifyFirstProductDisplayed();
+        log.info("Product detail screen displayed for {}", ProductDetailPage.FIRST_PRODUCT_NAME);
     }
 }

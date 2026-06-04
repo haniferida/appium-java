@@ -28,4 +28,8 @@ public final class DriverManager {
             DRIVER.remove();
         }
     }
+
+    public static boolean hasDriver() {
+        return DRIVER.get() != null;
+    }
 }

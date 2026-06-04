@@ -30,3 +30,8 @@ Thumbs.db
 # Sample apps under apps/ — keep README only
 apps/**/*
 !apps/README.md
+
+# Allure (also under target/ when using default Maven output)
+.allure/
+allure-results/
+allure-report/

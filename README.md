@@ -153,7 +153,7 @@ mvn clean test -Dsample.app=swag-labs
 mvn clean test -Dplatform=ios -Dsample.app=mda-rn
 
 # Single test class
-mvn test -Dplatform=ios -Dtest=MyDemoAppLoginTest
+mvn test -Dplatform=ios -Dtest=MyDemoAppNativeTest
 ```
 
 ## Adding tests
@@ -163,9 +163,31 @@ mvn test -Dplatform=ios -Dtest=MyDemoAppLoginTest
 3. Create tests under `src/test/java/com/appium/tests/` extending `BaseTest`.
 4. Register classes in `testng.xml`.
 
-Example flow: `LoginPage` + `MyDemoAppLoginTest` (`sample.app=mda-native`).
+Example flow: `LoginPage` + `ProductsPage` in `MyDemoAppNativeTest` (`sample.app=mda-native`).
 
 `BaseTest` runs `@BeforeMethod` (create driver) and `@AfterMethod` (quit driver) for each `@Test` method.
+
+## Allure report
+
+Tests publish results to `target/allure-results/`. On failure, **screenshot** and **page source** are attached automatically.
+
+**View report locally** (requires [Allure CLI](https://allurereport.org/docs/install/) or use Maven):
+
+```bash
+mvn clean test
+mvn allure:serve
+```
+
+`allure:serve` opens the HTML report in your browser and shuts down when you close it.
+
+Generate a static report without opening a browser:
+
+```bash
+mvn allure:report
+# output: target/site/allure-maven-plugin/index.html
+```
+
+Allure labels include `platform`, `env`, and `sample.app` (when set). Page actions use `@Step` for a readable timeline in the report.
 
 ## Troubleshooting
 
