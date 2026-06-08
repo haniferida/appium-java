@@ -49,12 +49,24 @@ public final class DriverFactory {
         setIfPresent(caps, "appium:bundleId", ConfigReader.get("bundle.id"));
         setIfPresent(caps, "appium:appWaitActivity", ConfigReader.get("app.wait.activity"));
 
+        setIfPresentInt(caps, "appium:adbExecTimeout", ConfigReader.get("adb.exec.timeout"));
+        setIfPresentInt(caps, "appium:uiautomator2ServerInstallTimeout",
+                ConfigReader.get("uiautomator2.server.install.timeout"));
+        setIfPresentInt(caps, "appium:uiautomator2ServerLaunchTimeout",
+                ConfigReader.get("uiautomator2.server.launch.timeout"));
+
         return caps;
     }
 
     private static void setIfPresent(MutableCapabilities caps, String name, String value) {
         if (value != null && !value.isBlank()) {
             caps.setCapability(name, value);
+        }
+    }
+
+    private static void setIfPresentInt(MutableCapabilities caps, String name, String value) {
+        if (value != null && !value.isBlank()) {
+            caps.setCapability(name, Integer.parseInt(value.trim()));
         }
     }
 }
