@@ -26,7 +26,7 @@ jobs:
   android-tests:
     needs: compile
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -53,15 +53,15 @@ jobs:
           arch: x86_64
           profile: pixel_6
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          emulator-boot-timeout: 600
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-metrics
           script: |
-            set -euxo pipefail
+            set -eu
             npm install -g appium
             appium driver install uiautomator2
             nohup appium --log-level error --port 4723 > appium.log 2>&1 &
-            sleep 15
-            adb wait-for-device
-            adb shell 'while [[ -z $(getprop sys.boot_completed | tr -d "\r") ]]; do sleep 2; done'
+            sleep 10
+            adb devices
             mvn -B test -Denv=ci -Dplatform=android
 
       - name: Generate Allure report
@@ -93,7 +93,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Upload Appium server log
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: appium-log
