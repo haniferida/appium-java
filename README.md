@@ -199,9 +199,20 @@ Allure labels include `platform`, `env`, and `sample.app` (when set). Page actio
 | App path / `file:` protocol error | Use a normal path in `app.path`; project resolves paths under `apps/` automatically |
 | 16 KB compatibility popup (Android) | Warning from sample APK on newer emulators; usually safe to dismiss with **OK** |
 
-## CI (optional)
+## CI (GitHub Actions)
 
-Point `appium.server.url` at your grid or cloud Appium endpoint and pass `-Denv` for the target environment.
+Workflow: [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
+
+| Job | When | What it does |
+|-----|------|----------------|
+| `compile` | push / PR to `main` | `mvn test-compile` (fast sanity check) |
+| `android-tests` | push / PR to `main` | API 30 emulator + Appium + `mvn test -Denv=ci` |
+
+CI config: `src/test/resources/config/ci.properties` (Android 11 / API 30). Sample APK is downloaded via `scripts/download-ci-apps.sh`.
+
+After a run, download **allure-report** or **surefire-reports** from the Actions run **Artifacts** section.
+
+For Sauce Labs or another cloud grid, point `appium.server.url` at your endpoint and pass `-Denv=staging` (or add a new env file).
 
 ## Dependencies
 
