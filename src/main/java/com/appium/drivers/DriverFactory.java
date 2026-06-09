@@ -56,6 +56,7 @@ public final class DriverFactory {
                 ConfigReader.get("uiautomator2.server.launch.timeout"));
         setIfPresentInt(caps, "appium:appWaitDuration", ConfigReader.get("app.wait.duration"));
         setIfPresentBoolean(caps, "appium:autoGrantPermissions", ConfigReader.get("auto.grant.permissions"));
+        setIfPresentBoolean(caps, "appium:noReset", ConfigReader.get("no.reset"));
 
         return caps;
     }

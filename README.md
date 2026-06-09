@@ -210,6 +210,8 @@ Workflow: [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
 
 CI config: `src/test/resources/config/ci.properties` (Android 11 / API 30). Sample APK is downloaded via `scripts/download-ci-apps.sh`.
 
+**Is emulator CI realistic?** Yes — but it is slow and flaky on free GitHub-hosted Linux runners (no KVM, software rendering, ~5–10 min cold boot). Teams that need reliable Appium CI usually use a **device cloud** (Sauce Labs, BrowserStack) or run emulator jobs **nightly / on `main` only**. The [Appium UiAutomator2 driver](https://github.com/appium/appium-uiautomator2-driver/blob/master/.github/workflows/functional-test.yml) runs functional tests on `ubuntu-latest` emulators the same way; this project follows that pattern (`google_apis`, `x86` for API 30).
+
 After a run, open the Allure report from CI artifacts:
 
 1. In GitHub, open the failed **Actions** run → scroll to **Artifacts**.

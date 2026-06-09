@@ -46,23 +46,36 @@ jobs:
       - name: Download sample Android app
         run: chmod +x scripts/download-ci-apps.sh && ./scripts/download-ci-apps.sh
 
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
       - name: Run tests on Android emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 30
-          arch: x86_64
+          target: google_apis
+          arch: x86
           profile: pixel_6
           disable-animations: true
           emulator-boot-timeout: 600
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-metrics
           script: |
             set -eu
-            npm install -g appium
+            npm install -g appium@2
             appium driver install uiautomator2
             nohup appium --log-level error --port 4723 > appium.log 2>&1 &
             sleep 10
             adb devices
+            adb shell pm grant com.saucelabs.mydemoapp.android android.permission.ACCESS_FINE_LOCATION || true
+            adb shell pm grant com.saucelabs.mydemoapp.android android.permission.ACCESS_COARSE_LOCATION || true
+            adb shell pm grant com.saucelabs.mydemoapp.android android.permission.CAMERA || true
             mvn -B test -Denv=ci -Dplatform=android
+            if [ -n "$(pgrep -f 'appium.*4723' || true)" ]; then
+              pkill -f 'appium.*4723' || true
+            fi
 
       - name: Generate Allure report
         if: always()

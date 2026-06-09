@@ -93,6 +93,14 @@ public final class ConfigReader {
         return Integer.parseInt(value);
     }
 
+    public static boolean getBoolean(String key, boolean defaultValue) {
+        String value = get(key);
+        if (value == null || value.isBlank()) {
+            return defaultValue;
+        }
+        return Boolean.parseBoolean(value.trim());
+    }
+
     /**
      * Resolves {@code app.path} to an absolute filesystem path (project root = user.dir).
      */
