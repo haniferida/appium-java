@@ -64,7 +64,8 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-metrics
           script: |
             set -eu
-            npm install -g appium@2
+            # uiautomator2 driver 7.x requires Appium 3+ (appium@2 breaks driver install)
+            npm install -g appium@3
             appium driver install uiautomator2
             nohup appium --log-level error --port 4723 > appium.log 2>&1 &
             sleep 10
