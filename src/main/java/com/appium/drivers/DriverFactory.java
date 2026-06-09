@@ -54,6 +54,8 @@ public final class DriverFactory {
                 ConfigReader.get("uiautomator2.server.install.timeout"));
         setIfPresentInt(caps, "appium:uiautomator2ServerLaunchTimeout",
                 ConfigReader.get("uiautomator2.server.launch.timeout"));
+        setIfPresentInt(caps, "appium:appWaitDuration", ConfigReader.get("app.wait.duration"));
+        setIfPresentBoolean(caps, "appium:autoGrantPermissions", ConfigReader.get("auto.grant.permissions"));
 
         return caps;
     }
@@ -67,6 +69,12 @@ public final class DriverFactory {
     private static void setIfPresentInt(MutableCapabilities caps, String name, String value) {
         if (value != null && !value.isBlank()) {
             caps.setCapability(name, Integer.parseInt(value.trim()));
+        }
+    }
+
+    private static void setIfPresentBoolean(MutableCapabilities caps, String name, String value) {
+        if (value != null && !value.isBlank()) {
+            caps.setCapability(name, Boolean.parseBoolean(value.trim()));
         }
     }
 }

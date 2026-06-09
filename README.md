@@ -210,7 +210,21 @@ Workflow: [`.github/workflows/ci.yml`](.github/workflows/ci.yml)
 
 CI config: `src/test/resources/config/ci.properties` (Android 11 / API 30). Sample APK is downloaded via `scripts/download-ci-apps.sh`.
 
-After a run, download **allure-report** or **surefire-reports** from the Actions run **Artifacts** section.
+After a run, open the Allure report from CI artifacts:
+
+1. In GitHub, open the failed **Actions** run → scroll to **Artifacts**.
+2. Download **allure-report** (pre-built HTML) or **allure-results** (raw JSON + attachments).
+3. Unzip the download.
+4. Open **`index.html`** in the unzipped folder in your browser (double-click or drag into Chrome/Firefox).
+
+If you downloaded **allure-results** instead, generate HTML locally:
+
+```bash
+unzip ~/Downloads/allure-results.zip -d target/
+mvn allure:serve
+```
+
+On failure, each test attaches a **screenshot** and **page source** under the failed step in the Allure timeline (see *Screenshot on failure* / *Page source on failure* in the test body).
 
 For Sauce Labs or another cloud grid, point `appium.server.url` at your endpoint and pass `-Denv=staging` (or add a new env file).
 
